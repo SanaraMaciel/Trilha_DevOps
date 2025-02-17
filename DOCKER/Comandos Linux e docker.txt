@@ -1,0 +1,127 @@
+
+									************ comandos docker ********************
+
+
+* mostra quais containers estão em execução no momento: sudo docker ps ou docker container ls
+
+* visualiza todos os containers, inclusive os que já não estão mais em execução : docker container ls -a ou docker ps -a 
+
+* para o conteiner : docker stop {ID do conteiner} ex: docker stop 9159610d06ec
+
+* reexecutar o conteiner que foi parado: docker start {ID do conteiner} ex: docker start 9159610d06ec
+
+* executar comando interativo dentro do container: docker exec -it {ID do conteiner} {comando que vai executar} ex: docker exec -it 9159610d06ec bash (it fala que é interativo)
+
+* pausar o conteiner: docker pause {ID do conteiner} ex: 7f310ccb8baf
+
+* despausar o conteiner: docker unpause {ID do conteiner}
+
+* o docker espera 10 segundos pra parar o conteiner se acaso vc quiser que ele pare imediatamente utilize o comando: docker stop -t=0 {ID do conteiner}
+
+* remover um conteiner: docker rm {ID do conteiner}
+
+* docker run -d dockersamples/static-site -> Para executarmos esse comando e mantermos o container em segundo plano no terminal sem travamentos, podemos adicionar a flag -d, indicando "detached" (desanexado).
+
+* parar e remover o conteiner no msm comando: docker rm {ID do conteiner} --force
+
+
+* cria o conteiner determinando a porta que irá executar: docker run -d -p 8080:80 dockersamples/static-site sem especificar a porta docker run -d -P dockersamples/static-site 
+Obs: As flags -p e -P são úteis quando queremos fazer o mapeamento de portas entre nosso container e o nosso host.
+
+* mostra como está o mapeamento de portas do container em relação ao host: docker port {ID do conteiner}
+
+* lista todas as imagens que tem baixadas na máquina: docker images ou docker images ls 
+
+* detalha informações sobre a imagem docker a ser inspecionada: docker inspect {ID da imagem} ex: docker inspect f589ccde7957
+
+* comando para ver o historico(camadas) especificas de uma imagem: docker history ex: docker history f589ccde7957
+
+* parar todos os conteiners de uma vez só : docker stop $(docker container ls -q)
+
+* remover todos os conteiners de uma vez só, inclusive os parados: docker rmi $(docker container ls -aq)
+
+* remover todos as imagens de uma vez só, inclusive os parados: docker rmi $(docker image ls -aq) -- as vezes é necessário usar o --force no final para remover a remoção
+
+* mostrar o tamanho virtual do conteiner:  docker ps -s 
+
+* lista todos os volumes criados na máquina: docker volume ls
+
+* criando um volume: docker volume create meu-volume
+ 
+* criando um arquivo para ser gerenciado pelo docker: entre dentro do diretório escolhido e digite: touch um-arquivo-qualquer
+
+* cria um volume:  docker create volume {nome do volume}   
+
+* inspeciona detalhes do volume: docker inspect {nome do volume}
+
+* mostra informações do volume: docker volume ls 
+ 
+* remove volumes locais que não estão sendo usados : docker prune {nome do volume}
+
+* remove o volume : docker rm {nome do volume} 
+ 
+* criando tmpfs para linux: docker run -it --tmpfs=/app ubuntu bash 
+
+* inspecionando um container: docker inspect {ID do container}
+
+* lista todas as redes disponiveis : docker network ls 
+
+* criando a própria rede para usar no docker: docker network create --driver bridge minha-bridge{Nome da rede}
+
+* definindo um nome e a rede a ser usada para o container ao executar ele: docker run -it --name ubuntu1 --network minha-bridge ubuntu bash
+
+* executar um container em modo detached(pra ele não travar o terminal): docker compose up -d 
+
+* remover todos os container e redes criadas: docker compose down
+
+******* Criando uma imagem : *********************
+
+* docker build -t sanarafelicio/app-node:1.0 .
+
+executando a imagem criada acima: docker run -d -p 8081:3000 sanarafelicio/app-node:1.0
+
+
+*****************
+ 
+para pegar o IP da máquina (linux) : hostname -I 
+
+executar os arquivos de build nas pastas : sudo ./build.sh
+
+derrubar uma execução docker: sudo docker-compose down
+
+subir uma nova exec docker: sudo docker-compose up -d
+
+Para mostrar os logs de alguma pasta: sudo docker logs -f cpqd-manager 
+
+para conceder permissão de edição para algum arquivo: sudo chmod 777 ./start.sh (./start.sh é o nome do arquivo q precisa da permissão)
+
+
+criando uma network cpqd: sudo docker network create cpqd-network
+
+instalando o docker compose na máquina ubuntu: sudo apt-get install docker-compose
+
+verificando e atualizando o compose : sudo apt-get docker-compose
+
+iniciar o serviço docker na máquina: sudo service docker start
+
+verificar o status do docker na máquina: sudo systemctl status docker
+
+verificar a versão do docker instalada: docker --version
+
+listar as imagens docker ativas: sudo docker images -a
+
+mostrar os conteiners disponíveis: sudo docker ps
+
+remover uma imagem docker com problema(ex: keycloak): sudo docker rmi <id-da-imagem>
+
+"matar" todos os processos de uma só vez: docker ps -aq|xargs docker stop
+
+mostrar os arquivos ocultos do linux: sudo ls -la
+
+
+
+
+
+//verificar 
+sudo vi /etc/resolv.conf
+sudo vi /etc/wsl.conf
